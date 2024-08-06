@@ -1,113 +1,57 @@
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# compiled output
+/dist
+/node_modules
+/build
+*node_modules
 
 # Logs
 logs
 *.log
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# MacOS
+# OS
 .DS_Store
 
-# Editor directories and files
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Tests
+/coverage
+/.nyc_output
 
-# Dependency directories
-node_modules/
-jspm_packages/
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# Optional npm cache directory
-.npm
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# Optional eslint cache
-.eslintcache
-
-# Coverage directories
-coverage/
-*.lcov
-
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components/
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Next.js build output
-.next/
-out/
-
-# Nuxt.js build output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# Comment out if you have an Ejected Create React App
-# /build/
-
-# Create React App
-build/
-node_modules/
-src/service-worker.ts
-src/service-worker.ts.map
-src/setupTests.ts
-src/setupTests.ts.map
-
-# NestJS files
-dist/
-src/**/*.js
-
-# Docker files
-Dockerfile
-docker-compose.yml
-.dockerignore
-**/.dockerignore
-
-# Miscellaneous
-/.env
-/.env.local
-/.env.development.local
-/.env.test.local
-/.env.production.local
+# dotenv environment variable files
 .env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
-*.env
+.env.local
 
-# TernJS
-.tern-port
+# temp directory
+.temp
+.tmp
 
-# Project IDE
-.idea/
-.vscode/
-*.iml
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Build directories
-dist/
-tmp/
-temp/
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

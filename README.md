@@ -5,8 +5,8 @@
 Clone o repositório do projeto para sua máquina local:
 
 ```bash
-git clone <URL-do-seu-repositorio>
-cd <nome-do-repositorio>
+git clone git@github.com:GefersonLopes/corelab-web-challenge.git
+cd corelab-web-challenge
 ```
 
 ## Configure o Docker
