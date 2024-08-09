@@ -1,22 +1,41 @@
-version: '3'
+version: '3.9'
 services:
   frontend:
     build: ./front
     ports:
-      - '3000:80'
+      - '3000:3000'
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./front:/app
       - /app/node_modules
-
+    command: npm start
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - build/
+  
   backend:
     build: ./back
     ports:
       - '3001:3000'
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./back:/app
       - /app/node_modules
     command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - dist/
