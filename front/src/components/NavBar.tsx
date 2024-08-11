@@ -11,15 +11,19 @@ import { useForm } from 'react-hook-form';
 
 import { ISearch } from '../types/Search';
 import { schemaGeneric } from '../middlewares/schemaGeneric';
+import { useDispatch } from 'react-redux';
+import { setSearch } from '../features/params';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const { register, handleSubmit, reset } = useForm<ISearch>({
     resolver: yupResolver(schemaGeneric),
   });
 
   const onSubmit = (data: ISearch) => {
-    console.log(data);
-    reset();
+    const customParam = `color=${data.search}&&title=${data.search}`;
+    dispatch(setSearch(customParam));
   };
 
   return (
@@ -68,7 +72,10 @@ const Navbar = () => {
           size={25}
           title="Limpar busca"
           className="d-none d-md-flex mx-2"
-          onClick={() => reset()}
+          onClick={() => {
+            dispatch(setSearch(''));
+            reset();
+          }}
         />
       </nav>
     </header>

@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 
 import { hideModal, reset } from '../features/modal';
 import { motion, AnimatePresence } from 'framer-motion';
+import { updateCard } from '../services/updateCard';
+import { deleteCard } from '../services/deleteCard';
 
 const ModalConfirmation = () => {
   const dispatch = useDispatch();
@@ -61,8 +63,21 @@ const ModalConfirmation = () => {
                       type="button"
                       className={`btn ${modalState.typeModal !== 'save' ? 'btn-danger' : 'btn-primary'}`}
                       onClick={() => {
-                        // func submit
+                        if (
+                          modalState.idItem &&
+                          modalState.dataSubmit &&
+                          modalState.typeModal === 'edit'
+                        ) {
+                          updateCard(modalState.idItem, modalState.dataSubmit);
+                        }
+                        if (
+                          modalState.typeModal === 'delete' &&
+                          modalState.idItem
+                        ) {
+                          deleteCard(modalState.idItem);
+                        }
                         dispatch(reset());
+                        dispatch(hideModal());
                       }}
                     >
                       {modalState.content?.buttonConfirm}

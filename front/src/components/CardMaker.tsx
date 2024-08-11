@@ -7,12 +7,12 @@ import { motion } from 'framer-motion';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { createCard } from '../middlewares/cardMaker';
 import { ICardMaker } from '../types/CardMaker';
 import Tooltip from './Tooltip';
+import { createCardService } from '../services/createCard';
 
 const CardMaker = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -26,13 +26,13 @@ const CardMaker = () => {
     resolver: yupResolver(createCard),
   });
 
-  const onSubmit = (data: ICardMaker) => {
+  const onSubmit = async (data: ICardMaker) => {
     const content = {
       ...data,
       isFavorite,
     };
-    console.log(content);
-    toast.success('Cartão criado com sucesso!');
+
+    await createCardService(content);
     reset();
   };
 

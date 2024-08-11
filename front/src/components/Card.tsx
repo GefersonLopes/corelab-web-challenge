@@ -9,6 +9,7 @@ import { MdOutlineStarRate } from 'react-icons/md';
 import { IoMdCheckmark } from 'react-icons/io';
 
 import '../styles/card.scss';
+import '../styles/colors.scss';
 
 import Paint from './Paint';
 
@@ -26,6 +27,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Tooltip from './Tooltip';
+import { updateCard } from '../services/updateCard';
 
 const Card = (data: ICard) => {
   const dispatch = useDispatch();
@@ -52,8 +54,7 @@ const Card = (data: ICard) => {
   }, [data, reset]);
 
   const onSubmit = (formData: ICardMaker) => {
-    console.log(formData);
-    handleContentModal('save');
+    handleContentModal('save', formData);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
@@ -63,22 +64,28 @@ const Card = (data: ICard) => {
     }
   };
 
-  const handleContentModal = (type: string) => {
+  const handleContentModal = (type: string, dataSubmit?: ICardMaker) => {
     dispatch(
       setModalData({
         typeModal: type,
         idItem: data.id,
         content: type === 'save' ? dataSave : dataDelete,
+        dataSubmit,
       }),
     );
+  };
+
+  const setFavorite = () => {
+    updateCard(data.id, {
+      isFavorite: !data.isFavorite,
+    });
   };
 
   const errorMessage = errors?.description?.message || errors?.title?.message;
 
   return (
     <li
-      className={`cardItem d-flex flex-column align-items-center mx-4 my-5 position-relative`}
-      style={{ background: `${data.color}` }}
+      className={`bg-custom-color-${data?.color || 'white'} cardItem d-flex flex-column align-items-center mx-4 my-5 position-relative`}
     >
       <form onKeyDown={handleKeyDown} className="w-100 h-100">
         <header className="w-100 px-4 py-3 d-flex align-items-center justify-content-between border-bottom border-2">
@@ -93,6 +100,7 @@ const Card = (data: ICard) => {
               size={30}
               className="cursor-pointer"
               onClick={() => {
+                setFavorite();
                 toast.success('Desfavoritado com sucesso!');
               }}
             />
@@ -102,6 +110,7 @@ const Card = (data: ICard) => {
               size={30}
               className="cursor-pointer"
               onClick={() => {
+                setFavorite();
                 toast.success('Favoritado com sucesso!');
               }}
             />
@@ -158,7 +167,7 @@ const Card = (data: ICard) => {
           size={30}
           className="buttonIcon"
           title="Excluir"
-          onClick={() => handleContentModal('delete')}
+          onClick={() => handleContentModal('delete', data)}
         />
       </footer>
     </li>

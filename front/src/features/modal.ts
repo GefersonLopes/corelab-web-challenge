@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ICardMaker } from '../types/CardMaker';
 
 interface ModalState {
+  id?: number;
   show: boolean;
   typeModal?: 'save' | 'edit' | 'delete';
   idItem?: number;
   content?: any;
+  dataSubmit?: ICardMaker;
 }
 
 const initialState: ModalState = {
@@ -25,10 +28,11 @@ const modalSlice = createSlice({
       state.show = false;
     },
     setModalData: (state, action) => {
-      const { typeModal, idItem, content } = action.payload;
+      const { typeModal, idItem, content, dataSubmit } = action.payload;
       state.typeModal = typeModal;
       state.idItem = idItem;
       state.content = content;
+      state.dataSubmit = dataSubmit;
       state.show = true;
     },
     setId: (state, action) => {
