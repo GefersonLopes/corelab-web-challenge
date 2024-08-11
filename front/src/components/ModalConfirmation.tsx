@@ -10,11 +10,12 @@ import { hideModal, reset } from '../features/modal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { updateCard } from '../services/updateCard';
 import { deleteCard } from '../services/deleteCard';
+import { deleteCardReducer, updateCardReducer } from '../features/cards';
 
 const ModalConfirmation = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: RootState) => state.modal);
-
+  console.log(modalState);
   return (
     <AnimatePresence>
       {modalState.show && (
@@ -63,19 +64,32 @@ const ModalConfirmation = () => {
                       type="button"
                       className={`btn ${modalState.typeModal !== 'save' ? 'btn-danger' : 'btn-primary'}`}
                       onClick={() => {
+                        console.log(modalState.dataSubmit);
                         if (
                           modalState.idItem &&
                           modalState.dataSubmit &&
-                          modalState.typeModal === 'edit'
+                          modalState.typeModal === 'save'
                         ) {
+                          console.log(1);
                           updateCard(modalState.idItem, modalState.dataSubmit);
+                          dispatch(
+                            updateCardReducer({
+                              id: modalState.idItem,
+                              ...modalState.dataSubmit,
+                            }),
+                          );
                         }
                         if (
                           modalState.typeModal === 'delete' &&
                           modalState.idItem
                         ) {
+                          console.log(2);
                           deleteCard(modalState.idItem);
+                          dispatch(
+                            deleteCardReducer({ cardId: modalState.idItem }),
+                          );
                         }
+                        console.log(3);
                         dispatch(reset());
                         dispatch(hideModal());
                       }}

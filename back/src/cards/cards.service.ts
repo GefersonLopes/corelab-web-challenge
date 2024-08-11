@@ -49,11 +49,11 @@ export class CardsService {
     const where: any[] = [];
 
     if (params.title) {
-      where.push({ title: Like(`%${params.title}%`) });
+      where.push({ title: Like(`%${params.title.toLowerCase()}%`) });
     }
 
     if (params.color) {
-      where.push({ color: Like(`%${params.color}%`) });
+      where.push({ color: Like(`%${params.color.toLowerCase()}%`) });
     }
 
     if (where.length) {
@@ -66,6 +66,7 @@ export class CardsService {
 
     return this.cardsRepository.find({
       where: where.length ? where : undefined,
+      order: { updatedAt: 'DESC', createdAt: 'DESC', id: 'DESC' },
     });
   }
 }

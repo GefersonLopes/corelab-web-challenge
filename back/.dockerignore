@@ -18,8 +18,4 @@ config
 temp
 tmp
 cache
-dist
-build
-.env
-.env.*
 *.log

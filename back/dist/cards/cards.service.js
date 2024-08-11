@@ -47,10 +47,10 @@ let CardsService = class CardsService {
     async search(params) {
         const where = [];
         if (params.title) {
-            where.push({ title: (0, typeorm_2.Like)(`%${params.title}%`) });
+            where.push({ title: (0, typeorm_2.Like)(`%${params.title.toLowerCase()}%`) });
         }
         if (params.color) {
-            where.push({ color: (0, typeorm_2.Like)(`%${params.color}%`) });
+            where.push({ color: (0, typeorm_2.Like)(`%${params.color.toLowerCase()}%`) });
         }
         if (where.length) {
             where.forEach((condition) => {
@@ -62,6 +62,7 @@ let CardsService = class CardsService {
         }
         return this.cardsRepository.find({
             where: where.length ? where : undefined,
+            order: { updatedAt: 'DESC', createdAt: 'DESC', id: 'DESC' },
         });
     }
 };

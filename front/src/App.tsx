@@ -13,7 +13,7 @@ function App() {
   return (
     <section className="relative">
       <Navbar />
-      <Home />;
+      <Home />
       <ModalConfirmation />
       <LoadingModal />
       <ToastContainer />

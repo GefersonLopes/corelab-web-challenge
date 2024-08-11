@@ -42,6 +42,16 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], Card.prototype, "color", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    (0, class_validator_1.IsDate)(),
+    __metadata("design:type", Date)
+], Card.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    (0, class_validator_1.IsDate)(),
+    __metadata("design:type", Date)
+], Card.prototype, "updatedAt", void 0);
 exports.Card = Card = __decorate([
     (0, typeorm_1.Entity)()
 ], Card);

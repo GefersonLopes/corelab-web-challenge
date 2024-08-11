@@ -13,8 +13,12 @@ import { createCard } from '../middlewares/cardMaker';
 import { ICardMaker } from '../types/CardMaker';
 import Tooltip from './Tooltip';
 import { createCardService } from '../services/createCard';
+import { updateCardReducer } from '../features/cards';
+import { useDispatch } from 'react-redux';
 
 const CardMaker = () => {
+  const dispatch = useDispatch();
+
   const [isFavorite, setIsFavorite] = useState(false);
 
   const {
@@ -32,8 +36,10 @@ const CardMaker = () => {
       isFavorite,
     };
 
-    await createCardService(content);
+    const newCard = await createCardService(content);
+    newCard.id && dispatch(updateCardReducer(newCard));
     reset();
+    setIsFavorite(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {

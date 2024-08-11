@@ -28,6 +28,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import Tooltip from './Tooltip';
 import { updateCard } from '../services/updateCard';
+import { updateCardReducer } from '../features/cards';
 
 const Card = (data: ICard) => {
   const dispatch = useDispatch();
@@ -70,7 +71,10 @@ const Card = (data: ICard) => {
         typeModal: type,
         idItem: data.id,
         content: type === 'save' ? dataSave : dataDelete,
-        dataSubmit,
+        dataSubmit: {
+          ...data,
+          ...dataSubmit,
+        },
       }),
     );
   };
@@ -101,7 +105,12 @@ const Card = (data: ICard) => {
               className="cursor-pointer"
               onClick={() => {
                 setFavorite();
-                toast.success('Desfavoritado com sucesso!');
+                dispatch(
+                  updateCardReducer({
+                    ...data,
+                    isFavorite: !data.isFavorite,
+                  }),
+                );
               }}
             />
           ) : (
@@ -111,7 +120,12 @@ const Card = (data: ICard) => {
               className="cursor-pointer"
               onClick={() => {
                 setFavorite();
-                toast.success('Favoritado com sucesso!');
+                dispatch(
+                  updateCardReducer({
+                    ...data,
+                    isFavorite: !data.isFavorite,
+                  }),
+                );
               }}
             />
           )}

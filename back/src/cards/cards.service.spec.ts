@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CardsService } from './cards.service';
 import { Card } from './entities/card.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { DeleteResult } from 'typeorm';
@@ -142,7 +142,11 @@ describe('CardsService', () => {
       const params = { title: 'Card 2', color: 'blue', isFavorite: true };
       expect(await service.search(params)).toEqual(searchResults);
       expect(repository.find).toHaveBeenCalledWith({
-        where: expect.any(Array),
+        where: [
+          { title: Like(`%Card 2%`.toLowerCase()), isFavorite: true },
+          { color: Like(`%blue%`.toLowerCase()), isFavorite: true },
+        ],
+        order: { updatedAt: 'DESC', createdAt: 'DESC', id: 'DESC' },
       });
     });
   });

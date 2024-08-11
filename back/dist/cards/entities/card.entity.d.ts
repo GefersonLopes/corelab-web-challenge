@@ -4,4 +4,6 @@ export declare class Card {
     description: string;
     isFavorite: boolean;
     color: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
