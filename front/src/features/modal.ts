@@ -28,11 +28,10 @@ const modalSlice = createSlice({
       state.show = false;
     },
     setModalData: (state, action) => {
-      const { typeModal, idItem, content, dataSubmit } = action.payload;
-      state.typeModal = typeModal;
-      state.idItem = idItem;
-      state.content = content;
-      state.dataSubmit = dataSubmit;
+      const { payload } = action;
+      Object.keys(payload).forEach((key) => {
+        state[key as keyof ModalState] = payload[key];
+      });
       state.show = true;
     },
     setId: (state, action) => {
@@ -41,9 +40,9 @@ const modalSlice = createSlice({
     },
     reset: (state) => {
       state.show = false;
-      state.typeModal = undefined;
-      state.idItem = undefined;
-      state.content = undefined;
+      Object.keys(state).forEach((key) => {
+        state[key as keyof ModalState] = undefined;
+      });
     },
   },
 });

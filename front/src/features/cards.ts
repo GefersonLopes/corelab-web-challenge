@@ -10,7 +10,7 @@ const cardsSlice = createSlice({
   name: 'cards',
   initialState,
   reducers: {
-    setCards: (state, action) => {
+    setCardsReducer: (state, action) => {
       const { favorites, noFavorites } = action.payload;
       state.favorites = favorites;
       state.noFavorites = noFavorites;
@@ -18,14 +18,19 @@ const cardsSlice = createSlice({
     updateCardReducer: (state, action) => {
       const card = action.payload;
 
+      const filterCards = (cards: ICard[], card: ICard) => {
+        return cards.filter((c) => c.id !== card.id);
+      };
+
+      const newFavorites = filterCards(state.favorites, card);
+      const newNoFavorites = filterCards(state.noFavorites, card);
+
       if (card.isFavorite) {
-        const currentItems = state.favorites.filter((c) => c.id !== card.id);
-        state.favorites = [card, ...currentItems];
-        state.noFavorites = state.noFavorites.filter((c) => c.id !== card.id);
+        state.favorites = [card, ...newFavorites];
+        state.noFavorites = newNoFavorites;
       } else {
-        const currentItems = state.noFavorites.filter((c) => c.id !== card.id);
-        state.noFavorites = [card, ...currentItems];
-        state.favorites = state.favorites.filter((c) => c.id !== card.id);
+        state.noFavorites = [card, ...newNoFavorites];
+        state.favorites = newFavorites;
       }
     },
     deleteCardReducer: (state, action) => {
@@ -36,6 +41,6 @@ const cardsSlice = createSlice({
   },
 });
 
-export const { setCards, updateCardReducer, deleteCardReducer } =
+export const { setCardsReducer, updateCardReducer, deleteCardReducer } =
   cardsSlice.actions;
 export default cardsSlice.reducer;

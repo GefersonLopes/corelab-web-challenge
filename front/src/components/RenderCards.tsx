@@ -5,6 +5,8 @@ import Card from '../components/Card';
 import { motion } from 'framer-motion';
 
 const RenderCards = ({ cardList }: { cardList: ICard[] }) => {
+  if (cardList.length === 0) return <></>;
+
   return (
     <motion.section
       className="w-100 d-flex flex-wrap align-items-center"
