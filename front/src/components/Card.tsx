@@ -86,7 +86,6 @@ const Card = (data: ICard) => {
   };
 
   const errorMessage = errors?.description?.message || errors?.title?.message;
-
   return (
     <li
       className={`bg-custom-color-${data?.color || 'white'} cardItem d-flex flex-column align-items-center mx-4 my-5 position-relative`}
@@ -175,7 +174,7 @@ const Card = (data: ICard) => {
               }}
             />
           )}
-          <Paint />
+          <Paint {...data} />
         </div>
         <IoMdClose
           size={30}
