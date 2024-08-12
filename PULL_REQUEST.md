@@ -4,59 +4,70 @@
 [Github](https://github.com/GefersonLopes) | 
 [Email](mailto:gefersonjefrey@gmail.com)
 
-# Corelab Web Challenge
+## Link para vídeo explicativo
+[Youtube]()
 
-Este repositório contém o código do frontend (React) e backend (Nest.js) juntos para o desafio técnico.
+# Documentação do Projeto Back-End
 
-## Pré-requisitos
+Este documento fornece uma explicação detalhada do código back-end desenvolvido para gerenciar um sistema de cards, que inclui funcionalidades para criar, buscar, atualizar e deletar cards. A aplicação é construída usando NestJS, TypeORM e PostgreSQL, e segue as melhores práticas de desenvolvimento, incluindo validação de dados e testes unitários.
 
-Antes de começar, você precisa ter o seguinte instalado:
-- [Git](https://git-scm.com/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
-- [Node.js](https://nodejs.org/en/)
+## Estrutura dos principais diretórios
 
-## Configuração Inicial
+- [entities/:] Contém as definições das entidades do banco de dados.
 
-### Clonando o Repositório
+- [dto/:] Contém os Data Transfer Objects (DTOs) para validar e transferir dados entre camadas.
 
-clone o repositório e entre na pasta do projeto:
+- [controllers/:] Contém os controladores que lidam com as requisições HTTP.
 
-```bash
-git clone git@github.com:GefersonLopes/corelab-web-challenge.git
-cd corelab-web-challenge
-```
+- [services/:] Contém os serviços que implementam a lógica de negócios.
 
-## Inicializando o Projeto com Docker
+- [tests/:] Contém os testes unitários para verificar a funcionalidade do código.
 
-Seu Docker Desktop deve estar em execução para essa ação, após verificar o Docker, execute o comando para iniciar todos os serviços do docker-compose:
+### Controllers
 
-```bash
-docker-compose up --build
-```
+- POST /cards: Cria um novo card.
 
-Este comando vai fazer a inicialização tanto do backend quanto do frontend juntos.
+- GET /cards: Retorna todos os cards.
 
-## Acesso aos Serviços
+- GET /cards/search: Busca cards com base em parâmetros como título, cor e se é favorito.
 
-### Frontend
+- GET /cards/
+: Retorna um card específico com base no ID.
 
-[Link para acessar o Frontend](http://localhost:3000)
+- PATCH /cards/
+: Atualiza um card específico com base no ID.
 
-### Backend
+- DELETE /cards/
+: Remove um card específico com base no ID.
 
-[Link para acessar o Backend](http://localhost:3001)
+### Services
 
-### Documentação da API
+- create(): Cria um novo card.
 
-[Link para acessar a documentação Swagger](http://localhost:3001/docs)
+- findAll(): Retorna todos os cards.
 
-## Executando Testes
+- findOne(): Retorna um card específico.
 
-Para rodar os testes no backend, dever está acessando a pasta do backend, para isso, executar os comando:
+- update(): Atualiza um card específico.
 
-```bash
-cd back
-npm i
-npm test
+- remove(): Remove um card específico.
 
-```
+- search(): Busca cards com base em parâmetros como título, cor e se é favorito.
+
+# Documentação do Projeto Front-End
+
+Este projeto front-end foi desenvolvido utilizando React, Redux e Bootstrap, com o objetivo de criar uma interface interativa para gerenciamento de cards. A aplicação inclui funcionalidades como criação, edição, exclusão e busca de cards, além de uma interface responsiva e interativa com feedback visual para o usuário.
+
+## Estrutura dos principais diretórios
+
+- [Componentes]: Os componentes React são divididos de forma modular, com cada componente focando em uma parte específica da interface, como a criação de cards (CardMaker), exibição de cards (Card), modais de confirmação (ModalConfirmation), e a navegação (Navbar).
+
+- [Redux]: A aplicação utiliza Redux para gerenciar o estado global, especialmente para o controle dos cards e do estado dos modais. As funcionalidades de criação, edição e exclusão de cards são gerenciadas por reducers dedicados.
+
+- [Estilos]: O projeto utiliza SCSS para gerenciar estilos, permitindo a reutilização de variáveis e a criação de temas personalizados. Estilos específicos para cores e layout dos cards são organizados em arquivos separados.
+
+- [Yup]: A aplicação utiliza a biblioteca Yup para validar os formulários, garantindo que os dados submetidos pelo usuário atendam aos requisitos definidos.
+
+- [Axios]: O projeto utiliza Axios para realizar requisições HTTP, com configurações adicionais para gerenciar o estado de carregamento e tratar erros globalmente.
+
+- [Serviços]: O projeto inclui serviços personalizados para gerenciar operações de criação, atualização e listagem de cards.

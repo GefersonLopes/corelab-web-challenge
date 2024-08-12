@@ -4,6 +4,9 @@
 [Github](https://github.com/GefersonLopes) | 
 [Email](mailto:gefersonjefrey@gmail.com)
 
+## Link para vídeo explicativo
+[Youtube]()
+
 # Corelab Web Challenge
 
 Este repositório contém o código do frontend (React) e backend (Nest.js) juntos para o desafio técnico.
