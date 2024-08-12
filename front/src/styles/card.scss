@@ -1,7 +1,8 @@
 @import './variables.scss';
 
 .cardItem {
-  width: $card-width;
+  width: 100%;
+  max-width: $card-width;
   height: $card-height;
   border-radius: $border-radius;
   box-shadow: $box-shadow;

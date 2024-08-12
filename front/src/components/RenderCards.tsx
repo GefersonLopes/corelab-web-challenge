@@ -16,6 +16,7 @@ const RenderCards = ({ cardList }: { cardList: ICard[] }) => {
     >
       {cardList.map((i: ICard) => (
         <motion.div
+          className="d-flex flex-wrap align-items-center"
           key={i.id}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
