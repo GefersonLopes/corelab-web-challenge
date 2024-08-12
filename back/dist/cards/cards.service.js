@@ -47,10 +47,10 @@ let CardsService = class CardsService {
     async search(params) {
         const where = [];
         if (params.title) {
-            where.push({ title: (0, typeorm_2.Like)(`%${params.title.toLowerCase()}%`) });
+            where.push({ title: (0, typeorm_2.ILike)(`%${params.title}%`) });
         }
         if (params.color) {
-            where.push({ color: (0, typeorm_2.Like)(`%${params.color.toLowerCase()}%`) });
+            where.push({ color: (0, typeorm_2.ILike)(`%${params.color}%`) });
         }
         if (where.length) {
             where.forEach((condition) => {

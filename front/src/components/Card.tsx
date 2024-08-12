@@ -34,6 +34,11 @@ const Card = (data: ICard) => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: RootState) => state.modal);
 
+  const initialValueSubmit = {
+    title: data.title || '',
+    description: data.description || '',
+  };
+
   const {
     register,
     handleSubmit,
@@ -41,17 +46,11 @@ const Card = (data: ICard) => {
     formState: { errors },
   } = useForm<ICardMaker>({
     resolver: yupResolver(createCard),
-    defaultValues: {
-      title: data.title || '',
-      description: data.description || '',
-    },
+    defaultValues: initialValueSubmit,
   });
 
   useEffect(() => {
-    reset({
-      title: data.title || '',
-      description: data.description || '',
-    });
+    reset(initialValueSubmit);
   }, [data, reset]);
 
   const onSubmit = (formData: ICardMaker) => {
@@ -85,7 +84,57 @@ const Card = (data: ICard) => {
     });
   };
 
+  const defaultProps = {
+    size: 30,
+    className: 'cursor-pointer',
+  };
+
+  const HandleStar = () => {
+    const props = {
+      ...defaultProps,
+      onClick: () => {
+        setFavorite();
+        dispatch(
+          updateCardReducer({
+            ...data,
+            isFavorite: !data.isFavorite,
+          }),
+        );
+      },
+    };
+
+    return data.isFavorite ? (
+      <MdStarRate fill="#FFCC00" {...props} />
+    ) : (
+      <MdOutlineStarRate fill="#979797" {...props} />
+    );
+  };
+
+  const HandleEdit = () => {
+    return modalState.idItem === data.id ? (
+      <IoMdCheckmark
+        {...defaultProps}
+        title="Salvar"
+        onClick={() => handleSubmit(onSubmit)()}
+      />
+    ) : (
+      <MdOutlineEdit
+        {...defaultProps}
+        title="Editar"
+        onClick={() => {
+          if (modalState.typeModal === 'edit') {
+            return toast.error(
+              'Deve salvar o item anterior antes de editar outro!',
+            );
+          }
+          dispatch(setId(data.id));
+        }}
+      />
+    );
+  };
+
   const errorMessage = errors?.description?.message || errors?.title?.message;
+
   return (
     <li
       className={`bg-custom-color-${data?.color || 'white'} cardItem d-flex flex-column align-items-center mx-4 my-5 position-relative`}
@@ -97,37 +146,7 @@ const Card = (data: ICard) => {
             disabled={modalState.idItem !== data.id}
             {...register('title')}
           />
-          {data.isFavorite ? (
-            <MdStarRate
-              fill="#FFCC00"
-              size={30}
-              className="cursor-pointer"
-              onClick={() => {
-                setFavorite();
-                dispatch(
-                  updateCardReducer({
-                    ...data,
-                    isFavorite: !data.isFavorite,
-                  }),
-                );
-              }}
-            />
-          ) : (
-            <MdOutlineStarRate
-              fill="#979797"
-              size={30}
-              className="cursor-pointer"
-              onClick={() => {
-                setFavorite();
-                dispatch(
-                  updateCardReducer({
-                    ...data,
-                    isFavorite: !data.isFavorite,
-                  }),
-                );
-              }}
-            />
-          )}
+          <HandleStar />
         </header>
         <textarea
           id="descriptionCard"
@@ -152,28 +171,7 @@ const Card = (data: ICard) => {
       </form>
       <footer className="w-100 px-4 d-flex align-items-center justify-content-between pt-1">
         <div>
-          {modalState.idItem === data.id ? (
-            <IoMdCheckmark
-              size={30}
-              className="mx-1 buttonIcon"
-              title="Salvar"
-              onClick={() => handleSubmit(onSubmit)()}
-            />
-          ) : (
-            <MdOutlineEdit
-              size={30}
-              className="mx-1 buttonIcon"
-              title="Editar"
-              onClick={() => {
-                if (modalState.typeModal === 'edit') {
-                  return toast.error(
-                    'Deve salvar o item anterior antes de editar outro!',
-                  );
-                }
-                dispatch(setId(data.id));
-              }}
-            />
-          )}
+          <HandleEdit />
           <Paint {...data} />
         </div>
         <IoMdClose

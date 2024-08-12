@@ -15,13 +15,36 @@ import { deleteCardReducer, updateCardReducer } from '../features/cards';
 const ModalConfirmation = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: RootState) => state.modal);
+  const { idItem, dataSubmit, typeModal, show, content } = modalState;
+
+  const confirm = () => {
+    if (!idItem) return;
+
+    if (dataSubmit && typeModal === 'save') {
+      updateCard(idItem, dataSubmit);
+      dispatch(
+        updateCardReducer({
+          id: idItem,
+          ...dataSubmit,
+        }),
+      );
+    }
+
+    if (typeModal === 'delete') {
+      deleteCard(idItem);
+      dispatch(deleteCardReducer({ cardId: idItem }));
+    }
+
+    dispatch(reset());
+    dispatch(hideModal());
+  };
 
   return (
     <AnimatePresence>
-      {modalState.show && (
+      {show && (
         <>
           <div
-            className={`modal fade ${modalState.show ? 'show d-block' : 'd-none'} d-flex align-items-center justify-content-between w-100 h-100`}
+            className={`modal fade ${show ? 'show d-block' : 'd-none'} d-flex align-items-center justify-content-between w-100 h-100`}
             tabIndex={-1}
             role="dialog"
           >
@@ -35,7 +58,7 @@ const ModalConfirmation = () => {
               <div className="modal-dialog">
                 <div className="modal-content">
                   <div className="modal-header d-flex align-items-center justify-content-between">
-                    <h5 className="modal-title">{modalState.content?.title}</h5>
+                    <h5 className="modal-title">{content?.title}</h5>
                     <button
                       type="button"
                       className="border-0 bg-white close"
@@ -50,7 +73,7 @@ const ModalConfirmation = () => {
                     </button>
                   </div>
                   <div className="modal-body">
-                    <p>{modalState.content?.description}</p>
+                    <p>{content?.description}</p>
                   </div>
                   <div className="modal-footer">
                     <button
@@ -62,35 +85,10 @@ const ModalConfirmation = () => {
                     </button>
                     <button
                       type="button"
-                      className={`btn ${modalState.typeModal !== 'save' ? 'btn-danger' : 'btn-primary'}`}
-                      onClick={() => {
-                        if (
-                          modalState.idItem &&
-                          modalState.dataSubmit &&
-                          modalState.typeModal === 'save'
-                        ) {
-                          updateCard(modalState.idItem, modalState.dataSubmit);
-                          dispatch(
-                            updateCardReducer({
-                              id: modalState.idItem,
-                              ...modalState.dataSubmit,
-                            }),
-                          );
-                        }
-                        if (
-                          modalState.typeModal === 'delete' &&
-                          modalState.idItem
-                        ) {
-                          deleteCard(modalState.idItem);
-                          dispatch(
-                            deleteCardReducer({ cardId: modalState.idItem }),
-                          );
-                        }
-                        dispatch(reset());
-                        dispatch(hideModal());
-                      }}
+                      className={`btn ${typeModal !== 'save' ? 'btn-danger' : 'btn-primary'}`}
+                      onClick={() => confirm()}
                     >
-                      {modalState.content?.buttonConfirm}
+                      {content?.buttonConfirm}
                     </button>
                   </div>
                 </div>

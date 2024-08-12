@@ -38,6 +38,7 @@ const CardMaker = () => {
 
     const newCard = await createCardService(content);
     newCard.id && dispatch(updateCardReducer(newCard));
+
     reset();
     setIsFavorite(false);
   };
@@ -47,6 +48,19 @@ const CardMaker = () => {
       event.preventDefault();
       handleSubmit(onSubmit)();
     }
+  };
+
+  const HandleStar = () => {
+    const props = {
+      size: 30,
+      onClick: () => setIsFavorite(!isFavorite),
+    };
+
+    return isFavorite ? (
+      <MdStarRate fill="#FFCC00" {...props} />
+    ) : (
+      <MdOutlineStarRate fill="#979797" {...props} />
+    );
   };
 
   const errorMessage = errors?.description?.message || errors?.title?.message;
@@ -67,19 +81,7 @@ const CardMaker = () => {
               {...register('title')}
               className={errors.title ? 'is-invalid' : ''}
             />
-            {isFavorite ? (
-              <MdStarRate
-                fill="#FFCC00"
-                size={30}
-                onClick={() => setIsFavorite(!isFavorite)}
-              />
-            ) : (
-              <MdOutlineStarRate
-                fill="#979797"
-                size={30}
-                onClick={() => setIsFavorite(!isFavorite)}
-              />
-            )}
+            <HandleStar />
           </header>
           <div className="position-relative">
             <div

@@ -3,7 +3,7 @@ import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Card } from './entities/card.entity';
-import { DeleteResult, Like, Repository } from 'typeorm';
+import { DeleteResult, ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class CardsService {
@@ -49,11 +49,11 @@ export class CardsService {
     const where: any[] = [];
 
     if (params.title) {
-      where.push({ title: Like(`%${params.title.toLowerCase()}%`) });
+      where.push({ title: ILike(`%${params.title}%`) });
     }
 
     if (params.color) {
-      where.push({ color: Like(`%${params.color.toLowerCase()}%`) });
+      where.push({ color: ILike(`%${params.color}%`) });
     }
 
     if (where.length) {
