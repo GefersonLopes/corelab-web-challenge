@@ -5,7 +5,7 @@
 [Email](mailto:gefersonjefrey@gmail.com)
 
 ## Link para vídeo explicativo
-[Youtube]()
+[Youtube](https://youtu.be/U_D_nwJzZa0)
 
 # Corelab Web Challenge
 
